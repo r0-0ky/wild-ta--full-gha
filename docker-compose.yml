@@ -1,0 +1,58 @@
+version: '3.3'
+
+networks:
+  default_network:
+    driver: bridge
+
+services:
+  frontend:
+    build: 
+      context: frontend/.
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./frontend:/app
+  test_web:
+    build:
+      context: backend/.
+      dockerfile: Dockerfile
+    ports:
+      - "8002:8002"
+    env_file:
+      - backend/.env
+    volumes:
+      - ./backend:/app
+    networks:
+      - default_network
+  redis:
+    image: redis:alpine
+    container_name: redis
+    restart: always
+    volumes:
+      - redis_data:/data
+    ports:
+      - "6379:6379"
+    env_file:
+      - backend/.env
+    networks:
+      - default_network
+  bot:
+    build:
+      context: backend/.
+    command: python bot.py
+    env_file:
+      - backend/.env
+    volumes:
+      - ./backend:/app
+    expose:
+      - "8003"
+    ports:
+      - "8003:8003"
+    depends_on:
+      - test_web
+    networks:
+      - default_network
+
+volumes:
+  redis_data:
