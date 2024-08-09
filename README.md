@@ -16,6 +16,9 @@
 docker-compose up -d 
 ```
 
+frontend часть будет доступна по аддресу: `http://localhost:3000/`  
+backend часть будет доступна по аддресу: `http://localhost:8002/`  
+
 ## Cписок необходимого ПО 
 * WebApp
 * React TS
