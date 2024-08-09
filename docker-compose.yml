@@ -13,6 +13,7 @@ services:
       - "3000:3000"
     volumes:
       - ./frontend:/app
+      - /app/node_modules
   test_web:
     build:
       context: backend/.

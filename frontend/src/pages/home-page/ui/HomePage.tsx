@@ -69,7 +69,6 @@ export const HomePage: React.FC = () => {
     if (currentEnergy < maxEnergy) {
       const interval = setInterval(() => {
         setCurrentEnergy(prev => prev + 1);
-        energySocket?.send(JSON.stringify({ energy: `${currentEnergy + 1}` }));
       }, 1000)
       return () => clearInterval(interval);
     }
@@ -78,7 +77,6 @@ export const HomePage: React.FC = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setBalance(prev => prev + pointsToAdd);
-      coinsSocket?.send(JSON.stringify({ coins: `${balance + pointsToAdd}` }));
     }, 1000)
     return () => clearInterval(interval);
   }, [coinsSocket, balance, pointsToAdd]);
